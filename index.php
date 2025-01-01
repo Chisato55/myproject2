@@ -61,7 +61,7 @@
 </head>
 <body>
 
-<<div class="jumbotron text-center">
+<div class="jumbotron text-center">
   <h1 class="display-4" style="color: #333;">Welcome to Myproject1</h1> <!-- สีดำ -->
   <p class="lead" style="color: #fff;">Your one-stop solution for all your needs</p> <!-- สีขาว -->
 </div>
