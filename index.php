@@ -81,7 +81,7 @@
         <a class="nav-link" href="login.php"><i class="fas fa-sign-in-alt"></i> Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="signup"><i class="fas fa-user-plus"></i> Signup</a>
+        <a class="nav-link" href="signup.php"><i class="fas fa-user-plus"></i> Signup</a>
       </li>
     </ul>
   </div>
