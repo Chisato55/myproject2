@@ -25,7 +25,7 @@ if (isset($_POST['login'])) {
     if ($queryt->rowCount() > 0) {
         echo "<script type='text/javascript'>";
         echo "alert('Login successful!');";
-        echo "document.location = 'welcome.php';";
+        echo "document.location = 'admin/index2.php';";
         echo "</script>";
     } else {
         echo "<script type='text/javascript'>";
