@@ -8,7 +8,7 @@
               data-accordion="false"
             >
               <li class="nav-item menu-open">
-                <a href="#" class="nav-link active">
+                <a href="dashboard.php" class="nav-link active">
                   <i class="nav-icon bi bi-speedometer"></i>
                   <p>
                     Dashboard
@@ -17,7 +17,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="./manage_user.php" class="nav-link">
+                    <a href="manage_user.php" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>users</p>
                     </a>
