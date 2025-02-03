@@ -8,7 +8,7 @@ error_reporting(0);?>
   <!--begin::Head-->
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Manage users</title>
+    <title>Edit users</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="title" content="AdminLTE | Dashboard v2" />
@@ -99,7 +99,7 @@ error_reporting(0);?>
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">Manege users</h3></div>
+              <div class="col-sm-6"><h3 class="mb-0">Edit users</h3></div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -120,62 +120,40 @@ error_reporting(0);?>
                   <div class="card-header"><h3 class="card-title">Manage Users</h3></div>
                   <!-- /.card-header -->
                   <div class="card-body">
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th style="width: 10px"></th>
-                          <th>fullname</th>
-                          <th>username</th>
-                          <th>useremail</th>
-                          <th>usermobile</th>
-                          <th style="width: 40px">Option</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                        //เชื่อมต่อกับ database
-                            $ret="select * from userdata";
-                            $query = $dbh ->prepare($ret);
-                            $query -> execute();
-                            $results = $query -> fetchAll(PDO::FETCH_OBJ);
-                            $cnt = 1;
- 
-                            if($query->rowCount() >0) {
-                                foreach($results as $row) {
-                        ?>
-                                    <tr class="align-middle">
-                                    <td><?php echo $cnt;?></td>
-                                    <td><?php echo $row->fullname;?></td>
-                                    <td><?php echo $row->username;?></td>
-                                    <td><?php echo $row->useremail;?></td>
-                                    <td><?php echo $row->usermobile;?></td>
-                                    <td>   
-                                  
-                                    <a href="edit-user.php?id=<?php echo $row->id;?>
-                                    " class="btn btn-warning">แก้ไข</a>
-                                    <a href="#" class="btn btn-danger">ลบ</a>
- 
-                                    </td>
-         
-                                    </tr>
-<?php                               $cnt=$cnt+1;
-                               }  
-                            }    
-                        ?>
-                        
-                      </tbody>
-                    </table>
+                    <?php $editid = $_GET['id'];  
+                        $sql "SELECT * FROM userdata WHERE id=:eid";
+                        $query = $dbh->prepare($sql);
+                        $query->
+                    
+                    
+                    ?>
+                  <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="fullname">Full Name:</label>
+                        <input type="text" class="form-control" id="fullname" placeholder="Enter Full Name" name="fullname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="useremail">Email:</label>
+                        <input type="email" class="form-control" id="useremail" placeholder="Enter Email" name="useremail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="usermobile">Mobile:</label>
+                        <input type="text" maxlength="10" pattern="[0-9]{10}" title="Enter 10-digit number only" class="form-control" id="usermobile" placeholder="Enter Mobile Number" name="usermobile" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginpassword">Password:</label>
+                        <input type="password" class="form-control" id="loginpassword" placeholder="Enter Password" name="loginpassword" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success" name="signup" id="signup">Register</button>
+                </form>
                   </div>
                   <!-- /.card-body -->
-                  <div class="card-footer clearfix">
-                    <ul class="pagination pagination-sm m-0 float-end">
-                      <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                    </ul>
-                  </div>
+                  
                 </div>
                 <!-- /.card -->
                 
@@ -243,155 +221,6 @@ error_reporting(0);?>
       integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
       crossorigin="anonymous"
     ></script>
-    <script>
-      // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
-      // IT'S ALL JUST JUNK FOR DEMO
-      // ++++++++++++++++++++++++++++++++++++++++++
-
-      /* apexcharts
-       * -------
-       * Here we will create a few charts using apexcharts
-       */
-
-      //-----------------------
-      // - MONTHLY SALES CHART -
-      //-----------------------
-
-      const sales_chart_options = {
-        series: [
-          {
-            name: 'Digital Goods',
-            data: [28, 48, 40, 19, 86, 27, 90],
-          },
-          {
-            name: 'Electronics',
-            data: [65, 59, 80, 81, 56, 55, 40],
-          },
-        ],
-        chart: {
-          height: 180,
-          type: 'area',
-          toolbar: {
-            show: false,
-          },
-        },
-        legend: {
-          show: false,
-        },
-        colors: ['#0d6efd', '#20c997'],
-        dataLabels: {
-          enabled: false,
-        },
-        stroke: {
-          curve: 'smooth',
-        },
-        xaxis: {
-          type: 'datetime',
-          categories: [
-            '2023-01-01',
-            '2023-02-01',
-            '2023-03-01',
-            '2023-04-01',
-            '2023-05-01',
-            '2023-06-01',
-            '2023-07-01',
-          ],
-        },
-        tooltip: {
-          x: {
-            format: 'MMMM yyyy',
-          },
-        },
-      };
-
-      const sales_chart = new ApexCharts(
-        document.querySelector('#sales-chart'),
-        sales_chart_options,
-      );
-      sales_chart.render();
-
-      //---------------------------
-      // - END MONTHLY SALES CHART -
-      //---------------------------
-
-      function createSparklineChart(selector, data) {
-        const options = {
-          series: [{ data }],
-          chart: {
-            type: 'line',
-            width: 150,
-            height: 30,
-            sparkline: {
-              enabled: true,
-            },
-          },
-          colors: ['var(--bs-primary)'],
-          stroke: {
-            width: 2,
-          },
-          tooltip: {
-            fixed: {
-              enabled: false,
-            },
-            x: {
-              show: false,
-            },
-            y: {
-              title: {
-                formatter: function (seriesName) {
-                  return '';
-                },
-              },
-            },
-            marker: {
-              show: false,
-            },
-          },
-        };
-
-        const chart = new ApexCharts(document.querySelector(selector), options);
-        chart.render();
-      }
-
-      const table_sparkline_1_data = [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54];
-      const table_sparkline_2_data = [12, 56, 21, 39, 73, 45, 64, 52, 36, 59, 44];
-      const table_sparkline_3_data = [15, 46, 21, 59, 33, 15, 34, 42, 56, 19, 64];
-      const table_sparkline_4_data = [30, 56, 31, 69, 43, 35, 24, 32, 46, 29, 64];
-      const table_sparkline_5_data = [20, 76, 51, 79, 53, 35, 54, 22, 36, 49, 64];
-      const table_sparkline_6_data = [5, 36, 11, 69, 23, 15, 14, 42, 26, 19, 44];
-      const table_sparkline_7_data = [12, 56, 21, 39, 73, 45, 64, 52, 36, 59, 74];
-
-      createSparklineChart('#table-sparkline-1', table_sparkline_1_data);
-      createSparklineChart('#table-sparkline-2', table_sparkline_2_data);
-      createSparklineChart('#table-sparkline-3', table_sparkline_3_data);
-      createSparklineChart('#table-sparkline-4', table_sparkline_4_data);
-      createSparklineChart('#table-sparkline-5', table_sparkline_5_data);
-      createSparklineChart('#table-sparkline-6', table_sparkline_6_data);
-      createSparklineChart('#table-sparkline-7', table_sparkline_7_data);
-
-      //-------------
-      // - PIE CHART -
-      //-------------
-
-      const pie_chart_options = {
-        series: [700, 500, 400, 600, 300, 100],
-        chart: {
-          type: 'donut',
-        },
-        labels: ['Chrome', 'Edge', 'FireFox', 'Safari', 'Opera', 'IE'],
-        dataLabels: {
-          enabled: false,
-        },
-        colors: ['#0d6efd', '#20c997', '#ffc107', '#d63384', '#6f42c1', '#adb5bd'],
-      };
-
-      const pie_chart = new ApexCharts(document.querySelector('#pie-chart'), pie_chart_options);
-      pie_chart.render();
-
-      //-----------------
-      // - END PIE CHART -
-      //-----------------
-    </script>
     <!--end::Script-->
   </body>
   <!--end::Body-->
