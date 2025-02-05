@@ -1,7 +1,19 @@
 <?php 
 session_start();
 include("../include/config.php");
-error_reporting(0);?>
+error_reporting(0);
+
+if(isset($_GET['did'])){
+  $did = $_GET['did'];
+  $sql = "DELETE FROM userdata WHERE id=:did";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':did',$did,PDO::PARAM_STR);
+  $query->execute();
+  echo "<script>alert('User has been deleted')</script>";
+  echo "<script>window.location.href='manage_user.php'</script>";
+}
+
+?>
 
 <!doctype html>
 <html lang="en">
@@ -151,10 +163,13 @@ error_reporting(0);?>
                                     <td><?php echo $row->usermobile;?></td>
                                     <td>   
                                   
-                                    <a href="edit-user.php?id=<?php echo $row->id;?>
-                                    " class="btn btn-warning">แก้ไข</a>
-                                    <a href="#" class="btn btn-danger">ลบ</a>
- 
+                                    <a href="edit-user.php?id=<?php echo $row->id; ?>" class="btn btn-warning">แก้ไข</a>
+                                    <a href="manage_user.php?did=<?php echo $row->id; ?>" 
+                                    class="btn btn-danger" 
+                                    onclick="return confirm('คุณต้องการลบผู้ใช้งานใช่ไหม?');">
+                                    ลบ
+                                    </a>
+
                                     </td>
          
                                     </tr>

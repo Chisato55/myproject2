@@ -120,37 +120,53 @@ error_reporting(0);?>
                   <div class="card-header"><h3 class="card-title">Manage Users</h3></div>
                   <!-- /.card-header -->
                   <div class="card-body">
-                    <?php $editid = $_GET['id'];  
-                        $sql "SELECT * FROM userdata WHERE id=:eid";
-                        $query = $dbh->prepare($sql);
-                        $query->
-                    
-                    
-                    ?>
-                  <form action="#" method="post">
-                    <div class="form-group">
-                        <label for="fullname">Full Name:</label>
-                        <input type="text" class="form-control" id="fullname" placeholder="Enter Full Name" name="fullname" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="useremail">Email:</label>
-                        <input type="email" class="form-control" id="useremail" placeholder="Enter Email" name="useremail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="usermobile">Mobile:</label>
-                        <input type="text" maxlength="10" pattern="[0-9]{10}" title="Enter 10-digit number only" class="form-control" id="usermobile" placeholder="Enter Mobile Number" name="usermobile" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginpassword">Password:</label>
-                        <input type="password" class="form-control" id="loginpassword" placeholder="Enter Password" name="loginpassword" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-success" name="signup" id="signup">Register</button>
-                </form>
+                      <form action="edit-users-api.php" method="post">
+                          <?php 
+                              $editid = $_GET['id'];  
+                              $sql = "SELECT * FROM userdata WHERE id=:eid";
+                              $query = $dbh->prepare($sql);
+                              $query->bindParam(':eid', $editid, PDO::PARAM_STR);
+                              $query->execute();
+                              $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+                              if ($query->rowCount() > 0) {
+                                  foreach ($results as $row) {  
+                          ?>
+                                      <input type="hidden" name="eid" id="eid" value="<?php echo htmlspecialchars($editid); ?>">
+                                      
+                                      <div class="form-group">
+                                          <label for="fullname">Full Name:</label>
+                                          <input type="text" class="form-control" id="fullname" placeholder="Enter Full Name" name="fullname" value="<?php echo htmlspecialchars($row->fullname); ?>" required>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                          <label for="username">Username:</label>
+                                          <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username" value="<?php echo htmlspecialchars($row->username); ?>" required>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                          <label for="useremail">Email:</label>
+                                          <input type="email" class="form-control" id="useremail" placeholder="Enter Email" name="useremail" value="<?php echo htmlspecialchars($row->useremail); ?>" required>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                          <label for="usermobile">Mobile:</label>
+                                          <input type="text" maxlength="10" pattern="[0-9]{10}" title="Enter 10-digit number only" class="form-control" id="usermobile" placeholder="Enter Mobile Number" name="usermobile" value="<?php echo htmlspecialchars($row->usermobile); ?>" required>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                          <label for="loginpassword">Password:</label>
+                                          <input type="password" class="form-control" id="loginpassword" placeholder="Enter New Password" name="loginpassword">
+                                          <small class="text-muted">Leave blank if you don't want to change the password.</small>
+                                      </div>
+                          <?php 
+                                  } // Close foreach loop
+                              } // Close if statement
+                          ?>
+
+                          <button type="submit" class="btn btn-success" name="update" id="update">Update</button>
+                      </form>
+
                   </div>
                   <!-- /.card-body -->
                   
