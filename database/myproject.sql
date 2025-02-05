@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2025 at 03:31 PM
+-- Generation Time: Feb 05, 2025 at 10:47 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -37,7 +37,30 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`cat_id`, `cat_name`) VALUES
-(1, 'เครื่องดื่ม');
+(1, 'ขนม'),
+(5, 'เครื่องดื่ม');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `pro_id` int(11) NOT NULL,
+  `pro_name` varchar(255) DEFAULT NULL,
+  `cat_id` int(11) DEFAULT NULL,
+  `pro_price` decimal(10,2) DEFAULT NULL,
+  `pro_cost` decimal(10,2) DEFAULT NULL,
+  `pro_img` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`pro_id`, `pro_name`, `cat_id`, `pro_price`, `pro_cost`, `pro_img`) VALUES
+(1, 'เล', 1, 15.00, 10.00, 'https://bky.co.th/wp-content/uploads/2018/07/Kai-Yang-35G-1.jpg');
 
 -- --------------------------------------------------------
 
@@ -62,9 +85,7 @@ CREATE TABLE `userdata` (
 
 INSERT INTO `userdata` (`id`, `fullname`, `username`, `useremail`, `usermobile`, `loginpassword`, `regdate`, `user_type`) VALUES
 (1, 'kak', 'user3', 'po11@gmail.com', '0888866666', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2024-12-19 03:09:13', 1),
-(3, 'ahhhhhhhhh', 'user1', 'poo@gmail.com', '0545555555', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2025-01-08 20:02:15', 1),
-(4, 'saadadsad', 'user2', 'p1212o@gmail.com', '0545555552', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2025-01-08 20:11:47', 1),
-(5, 'admin', 'admin1', 'apo@gmail.com', '0545555555', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '2025-01-08 20:26:36', 1),
+(5, 'admin', 'admin13', 'apo@gmail.com', '0545555555', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', '2025-01-08 20:26:36', 1),
 (6, 'admin', 'admin', 'admin@gmail.com', '0545555556', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '2025-01-22 22:05:32', 0);
 
 --
@@ -76,6 +97,12 @@ INSERT INTO `userdata` (`id`, `fullname`, `username`, `useremail`, `usermobile`,
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`cat_id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`pro_id`);
 
 --
 -- Indexes for table `userdata`
@@ -91,7 +118,13 @@ ALTER TABLE `userdata`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `pro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `userdata`
