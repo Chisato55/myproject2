@@ -115,7 +115,7 @@ if(isset($_GET['did'])){
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">User</li>
+                  <li class="breadcrumb-item active" aria-current="page">Category</li>
                 </ol>
               </div>
             </div>
@@ -132,21 +132,19 @@ if(isset($_GET['did'])){
                   <div class="card-header"><h3 class="card-title">Manage Users</h3></div>
                   <!-- /.card-header -->
                   <div class="card-body">
+                  <a href="add-category.php" class="btn btn-info">เพิ่ม</a>
                     <table class="table table-bordered">
                       <thead>
                         <tr>
                           <th style="width: 10px">#</th>
-                          <th>fullname</th>
-                          <th>username</th>
-                          <th>useremail</th>
-                          <th>usermobile</th>
+                          <th>ชื่อประเภทสินค้า</th>
                           <th style="width: 40px">Option</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         //เชื่อมต่อกับ database
-                            $ret="select * from userdata";
+                            $ret="select * from category";
                             $query = $dbh ->prepare($ret);
                             $query -> execute();
                             $results = $query -> fetchAll(PDO::FETCH_OBJ);
@@ -157,10 +155,8 @@ if(isset($_GET['did'])){
                         ?>
                                     <tr class="align-middle">
                                     <td><?php echo $cnt;?></td>
-                                    <td><?php echo $row->fullname;?></td>
-                                    <td><?php echo $row->username;?></td>
-                                    <td><?php echo $row->useremail;?></td>
-                                    <td><?php echo $row->usermobile;?></td>
+                                    <td><?php echo $row->cat_name;?></td>
+                                    
                                     <td>   
                                   
                                     <a href="edit-user.php?id=<?php echo $row->id; ?>" class="btn btn-warning">แก้ไข</a>
@@ -184,7 +180,7 @@ if(isset($_GET['did'])){
                   <!-- /.card-body -->
                   <div class="card-footer clearfix">
                     <ul class="pagination pagination-sm m-0 float-end">
-                      
+                    
                     </ul>
                   </div>
                 </div>
