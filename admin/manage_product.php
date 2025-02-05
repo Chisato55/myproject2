@@ -3,20 +3,17 @@ session_start();
 include("../include/config.php");
 error_reporting(0);
 
-// ตรวจสอบว่า URL มีพารามิเตอร์ 'did' หรือไม่
 if(isset($_GET['did'])){
-  $did = $_GET['did'];  // รับค่า cat_id ที่ต้องการลบ
-  // สร้างคำสั่ง SQL เพื่อทำการลบข้อมูลจากตาราง category
-  $sql = "DELETE FROM category WHERE cat_id = :did";
+  $did = $_GET['did'];
+  $sql = "DELETE FROM products WHERE id=:did";
   $query = $dbh->prepare($sql);
-  $query->bindParam(':did', $did, PDO::PARAM_INT);
+  $query->bindParam(':did',$did,PDO::PARAM_STR);
   $query->execute();
-  
-  // แจ้งเตือนการลบสำเร็จ
-  echo "<script>alert('สินค้าถูกลบเรียบร้อยแล้ว'); window.location.href='manage_category.php';</script>";
+  echo "<script>alert('Product has been deleted')</script>";
+  echo "<script>window.location.href='manage_product.php'</script>";
 }
-?>
 
+?>
 
 <!doctype html>
 <html lang="en">
@@ -118,7 +115,7 @@ if(isset($_GET['did'])){
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Admin</li>
+                  <li class="breadcrumb-item active" aria-current="page">User</li>
                 </ol>
               </div>
             </div>
@@ -132,53 +129,51 @@ if(isset($_GET['did'])){
             <!-- Info boxes -->
             <div class="col-md-12">
                 <div class="card mb-4">
-                  <div class="card-header"><h3 class="card-title">Manage cat</h3></div>
-                  <h3 class="card-title">Manage Categories</h3>
-                  <a href="add-category.php" class="btn btn-primary btn-sm p-1 float-end">เพิ่มหมวดหมู่</a>
-
+                  <div class="card-header"><h3 class="card-title">Manage Product</h3></div>
                   <!-- /.card-header -->
-                  <div class="card-body">
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th style="width: 10px">#</th>
-                          <th>ชื่อสินค้า</th>
-                         
-                          <th style="width: 40px">Option</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                        //เชื่อมต่อกับ database
-                            $ret="select * from category";
-                            $query = $dbh ->prepare($ret);
-                            $query -> execute();
-                            $results = $query -> fetchAll(PDO::FETCH_OBJ);
-                            $cnt = 1;
- 
-                            if($query->rowCount() >0) {
-                                foreach($results as $row) {
-                        ?>
-                                    <tr class="align-middle">
-                                    <td><?php echo $cnt;?></td>
-                                    <td><?php echo $row->cat_name;?></td>
-                                    <td>   
-                                  
-                                    <a href="edit-category.php?id=<?php echo $row->cat_id; ?>" class="btn btn-warning btn-sm p-1" style="font-size: 12px;">แก้ไข</a>
-                                    <a href="manage_category.php?did=<?php echo $row->cat_id; ?>" 
-                                        class="btn btn-danger" 
-                                        onclick="return confirm('คุณต้องการลบสินค้านี้ใช่ไหม?');">
-                                        ลบ
-                                        </a>
+                  <a href="add_product.php" class="btn btn-success">เพิ่มสินค้า</a>
+                  <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                
+                                <th>Price</th>
+                                <th>Cost</th>
+                                <th>Image</th>
+                                <th>Options</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                                $sql = "SELECT * FROM products"; // Fetch product data
+                                $query = $dbh->prepare($sql);
+                                $query->execute();
+                                $products = $query->fetchAll(PDO::FETCH_OBJ);
+                                $cnt = 1;
+                                
+                                if($query->rowCount() > 0) {
+                                foreach($products as $products) {
+                            ?>
+                                    <tr>
+                                    <td><?php echo $cnt; ?></td>
+                                    <td><?php echo $products->pro_name; ?></td>
+                                    <td><?php echo $products->pro_price; ?></td>
+                                    <td><?php echo $products->pro_cost; ?></td>
 
-
+                                    <td>
+                                        <img src="<?php echo $products->pro_img; ?>" alt="Product Image" width="50" height="50">
                                     </td>
-         
+                                    <td>
+                                    <a href="edit-product.php?id=<?php echo $products->pro_id; ?>" class="btn btn-primary">แก้ไขสินค้า</a>
+                                    <a href="delete_product.php?id=<?php echo $pro_id ?>" class="btn btn-danger" onclick="return confirm('คุณต้องการลบสินค้านี้จริงหรือไม่?')">ลบสินค้า</a>                                   
+                                    </td>
                                     </tr>
-<?php                               $cnt=$cnt+1;
-                               }  
-                            }    
-                        ?>
+                            <?php 
+                                $cnt++;
+                                }
+                                }
+                            ?>
                         
                       </tbody>
                     </table>
