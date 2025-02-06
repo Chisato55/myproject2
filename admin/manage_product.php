@@ -5,7 +5,7 @@ error_reporting(0);
 
 if(isset($_GET['did'])){
   $did = $_GET['did'];
-  $sql = "DELETE FROM products WHERE id=:did";
+  $sql = "DELETE FROM products WHERE pro_id=:did";
   $query = $dbh->prepare($sql);
   $query->bindParam(':did',$did,PDO::PARAM_STR);
   $query->execute();
@@ -164,9 +164,12 @@ if(isset($_GET['did'])){
                                     <td>
                                         <img src="<?php echo $products->pro_img; ?>" alt="Product Image" width="50" height="50">
                                     </td>
+                                    
                                     <td>
-                                    <a href="edit-product.php?id=<?php echo $products->pro_id; ?>" class="btn btn-primary">แก้ไขสินค้า</a>
-                                    <a href="delete_product.php?id=<?php echo $pro_id ?>" class="btn btn-danger" onclick="return confirm('คุณต้องการลบสินค้านี้จริงหรือไม่?')">ลบสินค้า</a>                                   
+                                        <a href="edit-product.php?id=<?php echo $products->pro_id; ?>" class="btn btn-primary">แก้ไขสินค้า</a>
+                                        <a href="delete_product.php?did=<?php echo $products->pro_id; ?>" class="btn btn-danger" onclick="return confirm('คุณต้องการลบสินค้านี้จริงหรือไม่?')">ลบสินค้า</a>
+                                    </td>
+                                   
                                     </td>
                                     </tr>
                             <?php 
