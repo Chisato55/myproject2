@@ -13,9 +13,7 @@ if($_SESSION['user_type']==1){
         $usermobile = $_POST['usermobile'];
         $loginpassword = $_POST['loginpassword'];
  
-        $hasedpassword = hash('sha256',$loginpassword);
-        //print_r($_POST);
- 
+        $hasedpassword = hash('sha256',$loginpassword); 
  
         $sql ="UPDATE userdata SET fullname=:fullname,username=:username,useremail=:useremail,usermobile=:usermobile,loginpassword=:hasedpassword WHERE id=:eid";
         $query = $dbh->prepare($sql);

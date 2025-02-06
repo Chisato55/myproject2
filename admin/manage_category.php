@@ -133,8 +133,7 @@ if(isset($_GET['did'])){
             <div class="col-md-12">
                 <div class="card mb-4">
                   <div class="card-header"><h3 class="card-title">Manage cat</h3></div>
-                  <h3 class="card-title">Manage Categories</h3>
-                  <a href="add-category.php" class="btn btn-primary btn-sm p-1 float-end">เพิ่มหมวดหมู่</a>
+                  <a href="add-category.php" class="btn btn- btn-sm p-1" style="font-size: 12px;">เพิ่มหมวดหมู่</a>
 
                   <!-- /.card-header -->
                   <div class="card-body">

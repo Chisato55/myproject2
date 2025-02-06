@@ -131,7 +131,7 @@ if(isset($_GET['did'])){
                 <div class="card mb-4">
                   <div class="card-header"><h3 class="card-title">Manage Product</h3></div>
                   <!-- /.card-header -->
-                  <a href="add_product.php" class="btn btn-success">เพิ่มสินค้า</a>
+                  <a href="add-product.php" class="btn btn-success">เพิ่มสินค้า</a>
                   <table class="table table-bordered">
                             <thead>
                             <tr>
