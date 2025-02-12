@@ -10,6 +10,7 @@ if (isset($_POST['signup'])) {
     $password = $_POST['loginpassword'];
     $hasedpassword = hash('sha256', $password);
 
+    // ตรวจสอบว่าชื่อผู้ใช้หรืออีเมลมีอยู่แล้วหรือไม่
     $ret = "SELECT * FROM userdata WHERE (username=:uname || useremail=:uemail)";
     $queryt = $dbh->prepare($ret);
     $queryt->bindParam(':uname', $username, PDO::PARAM_STR);
@@ -18,6 +19,7 @@ if (isset($_POST['signup'])) {
     $results = $queryt->fetchAll(PDO::FETCH_OBJ);
 
     if ($queryt->rowCount() == 0) {
+        // ถ้าไม่มีข้อมูลซ้ำ ให้ทำการสมัครสมาชิก
         $sql = "INSERT INTO userdata(fullname,username,useremail,usermobile,loginpassword) VALUES (:fname,:uname,:uemail,:umobile,:upass)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':fname', $fullname, PDO::PARAM_STR);
@@ -27,8 +29,11 @@ if (isset($_POST['signup'])) {
         $query->bindParam(':upass', $hasedpassword, PDO::PARAM_STR);
         $query->execute();
         $lastInsertId = $dbh->lastInsertId();
+
         if ($lastInsertId) {
-            echo "<div class='alert alert-success'>You have signed up successfully!</div>";
+            echo "<div class='alert alert-success'>You have signed up successfully! Redirecting to login page...</div>";
+            header("refresh:2;url=login.php"); // รอ 2 วินาทีแล้วเปลี่ยนหน้าไป login.php
+            exit();
         } else {
             echo "<div class='alert alert-danger'>Something went wrong. Please try again.</div>";
         }

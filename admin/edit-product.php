@@ -32,19 +32,23 @@ $categories = $query_cat->fetchAll(PDO::FETCH_OBJ);
 if (isset($_POST['submit'])) {
     $pro_name = trim($_POST['pro_name']);
     $pro_price = trim($_POST['pro_price']);
-    $pro_cost = trim($_POST['pro_cost']); // ใช้ pro_cost แทน cost
+    $pro_cost = trim($_POST['pro_cost']);
     $cat_id = trim($_POST['cat_id']);
+    $pro_img = trim($_POST['pro_img']);
 
-    if (empty($pro_name) || !is_numeric($pro_price) || !is_numeric($pro_cost) || empty($cat_id)) {
+    if (empty($pro_name) || !is_numeric($pro_price) || !is_numeric($pro_cost) || empty($cat_id) || empty($pro_img)) {
         echo "<script>alert('กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง');</script>";
     } else {
         // อัปเดตข้อมูลสินค้า
-        $sql = "UPDATE products SET pro_name = :pro_name, pro_price = :pro_price, pro_cost = :pro_cost, cat_id = :cat_id WHERE pro_id = :id";
+        $sql = "UPDATE products 
+                SET pro_name = :pro_name, pro_price = :pro_price, pro_cost = :pro_cost, cat_id = :cat_id, pro_img = :pro_img 
+                WHERE pro_id = :id";
         $query = $dbh->prepare($sql);
         $query->bindParam(':pro_name', $pro_name, PDO::PARAM_STR);
         $query->bindParam(':pro_price', $pro_price, PDO::PARAM_STR);
-        $query->bindParam(':pro_cost', $pro_cost, PDO::PARAM_STR); // ใส่ค่า pro_cost ที่ถูกต้อง
+        $query->bindParam(':pro_cost', $pro_cost, PDO::PARAM_STR);
         $query->bindParam(':cat_id', $cat_id, PDO::PARAM_INT);
+        $query->bindParam(':pro_img', $pro_img, PDO::PARAM_STR);
         $query->bindParam(':id', $pro_id, PDO::PARAM_INT);
         $query->execute();
 
@@ -98,6 +102,16 @@ if (isset($_POST['submit'])) {
                             <input type="text" name="pro_cost" value="<?= htmlspecialchars($product->pro_cost) ?>" class="form-control" required>
                         </div>
 
+                        <div class="mb-3">
+                            <label class="form-label">ลิงก์รูปภาพ</label>
+                            <input type="text" name="pro_img" id="pro_img" value="<?= htmlspecialchars($product->pro_img ?? '') ?>" class="form-control" oninput="previewImage()" required>
+                        </div>
+
+                        <!-- แสดงตัวอย่างรูปภาพ -->
+                        <div class="mb-3 text-center">
+                            <img id="imagePreview" src="<?= htmlspecialchars($product->pro_img ?? '') ?>" class="img-fluid rounded" style="max-height: 200px; display: <?= isset($product->pro_img) && !empty($product->pro_img) ? 'block' : 'none' ?>;">
+                        </div>
+
                         <button type="submit" name="submit" class="btn btn-success w-100">บันทึกการแก้ไข</button>
                     </form>
                 </div>
@@ -108,6 +122,20 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
+
+<script>
+function previewImage() {
+    const imageUrl = document.getElementById('pro_img').value;
+    const imgPreview = document.getElementById('imagePreview');
+    
+    if (imageUrl) {
+        imgPreview.src = imageUrl;
+        imgPreview.style.display = 'block';
+    } else {
+        imgPreview.style.display = 'none';
+    }
+}
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
